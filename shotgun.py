@@ -26,17 +26,44 @@ class Shotgun:
 
     def compact(self):
         # move EMPTY chambers to the end
-        pass
+        non_empty = [x for x in self.chambers if x != Shell.EMPTY]
+        number_to_pad_by = self.size - len(non_empty)
+        self.chambers = non_empty + [Shell.EMPTY]*number_to_pad_by
 
     def rack(self):
         # pop/return the next chamber's shell
-        pass
+        first_non_empty_chamber = self.first_non_empty(self)
+        value = self.chambers[first_non_empty_chamber]
+        self.chambers[first_non_empty_chamber] = Shell.EMPTY
+        return value
 
     def live_count(self):
-        pass
+        count = 0
+        for chamber in range(self.size):
+            if self.chambers[chamber] == Shell.LIVE:
+                count += 1
+        return count
+            
 
     def blank_count(self):
-        pass
+        count = 0
+        for chamber in range(self.size):
+            if self.chambers[chamber] == Shell.BLANK:
+                count += 1
+        return count
+
+
+    def empty_count(self):
+        count = 0
+        for chamber in range(self.size):
+            if self.chambers[chamber] == Shell.EMPTY:
+                count += 1
+        return count
+
+    def first_non_empty(self):
+        for chamber in range(self.size):
+            if chamber != Shell.EMPTY:
+                return chamber
 
     def __repr__(self):
         return f"Shotgun({self.chambers})"
