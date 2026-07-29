@@ -1,5 +1,6 @@
 # main.py
 from shotgun import Shotgun
+from player import Player
 
 def main():
     shotgun = Shotgun()
