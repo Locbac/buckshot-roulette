@@ -8,27 +8,44 @@ we finna do some machine learning or some sort of algo to get bots in the real g
 
 # ROADMAP
 
-- [x] Shotgun
-- [ ] Turns concept (game.py)
-- [ ] Items Impl
+**Phase 1 — Foundations (done / near-done)**
+- [x] `Shotgun` (chambers, rack, reload)
+- [x] Fix `player.py` naming conflict → single `self.inventory`
+- [x] Fix `items.py` enum syntax
+- [x] Fix `main.py` missing constructor arg
 
-- [ ] Game.py handles:
-    - [ ] Turns and direction (needed for remote item)
-    - [ ] Rounds (I II III)
-    - [ ] Player list
-    - [ ] shotguns
-    - [ ] Stats? richest, carelessness, etc.
-- [ ] Player.py
-    - [ ] health
-    - [ ] alive or not
-    - [ ] inventory and items
-    - [ ] Player ability to shoot
-    - [ ] Player health or adversary health goes down
-- [ ] Items.py
-    - [ ] enumerate all items
-    - [ ] Items is factory
-    - [ ] subitems: each item is a subitem
-- [ ] Itembox.py
-    - [ ] handled by game, dolled out - random items inside, increment [2, 3, 4], put into player inventory.
+**Phase 2 — Items (ABC, inheritance, factory)**
+- [ ] `Item` abstract base — one method: `use(user, target, game)`
+- [ ] All 9 subclasses (Cigarettes, Magnifying Glass, Beer, Phone, Inverter, Saw, Adrenaline)
+- [ ] `ItemBox` — dict-based factory, teaches "factory pattern" as literally just a dict + one method
 
+**Phase 3 — Player (teach: encapsulation)**
+- [ ] health/damage
+- [ ] `inventory: list[Item]`, capped size
+- [ ] `add_item` / `remove_item`
+
+**Phase 4 — Game (teach: composition, "who owns what")**
+- [ ] owns `players`, `shotgun`, `itembox`
+- [ ] turn order + direction (needed for Remote)
+- [ ] round/reload logic
+- [ ] win condition check
+
+**Phase 5 — RL-readiness (the actual point of the project)**
+- [ ] fixed `Action` enum (shoot self, shoot opp, use item 1–9)
+- [ ] `Game.step(action) -> (observation, reward, done, info)` — gym-shaped
+- [ ] separate `Observation` (what a player can see) from ground-truth `Shotgun.chambers`
+
+# Dependencies
+
+- Game
+    - Shotgun
+    - Player
+        - Holds Items
+    - Itembox
+        - Creates Items
+    - Items
+        - use method
+            - user
+            - target
+            - game
 
