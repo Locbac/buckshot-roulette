@@ -16,7 +16,7 @@ class Shotgun:
     def reset(self):
         # fill self.chambers with EMPTY, size long
         for chamber in range(self.size):
-            self.chambers[chamber] = Shell.EMPTY
+            self.chambers.append(Shell.EMPTY)
 
     def randomize(self):
         # fill each chamber with a random Shell
