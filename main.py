@@ -1,18 +1,23 @@
 # main.py
+from enum import IntEnum
+
+from constants import Constants
 from shotgun import Shotgun
 from player import Player
 from game import Game
-from game import Player_Settings #new
+from constants import Constants #new
 from game import Turn #new
-
 
 def main():
    
+    # Use getattr to avoid static attribute access issues if PLAYER_COUNT isn't recognized
+    game = Game(getattr(Constants, "PLAYER_COUNT"))
     
-    for i in range(Player_Settings.player_count): #new
+    for i in range(Constants.player_count): #new
+    for i in range(getattr()): #new
         Player_Settings.players.append(Player(total_health=Player_Settings.player_health)) #new
 
-    print(f"players: {Player_Settings.players[0].health}")
+  
 
     shotgun = Shotgun()
     shotgun.randomize()
@@ -26,6 +31,8 @@ def main():
     #print(shotgun) #new, didnt delete incase we need to read the final output of the shotgun 
     print(f"{shotgun.live_count()} live") #new, now we can see the live and blank rounds but not the order like in buckshot
     print(f"{shotgun.blank_count()} blank") #new
+
+    turn = Turn(Player_Settings.player_count)
 
 
 if __name__ == "__main__":

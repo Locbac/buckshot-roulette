@@ -1,21 +1,21 @@
 from player import Player
 import random # new, moved from main
 
-
-class Player_Settings: #new, I decided to move the game settings to our game.py so main can be reserved for executing the code
-    players = []
-    player_count = 2
-    player_health: int = random.randint(3,6)
-
-    game_settings = f"""\nplayer_count: {player_count} \nplayer_health: {player_health}\n"""
-
-
-
-
-
 class Game:
-    def __init__(self, players: list[Player]) -> None:
-        self.players = players
+    def __init__(self, player_count: int = 0, total_health: int = random.randint(3,6)) -> None:
+        self.players = []
+        if player_count == 0:
+            return
+        else:
+            for i in range(player_count):
+                new_player = self.create_player(total_health)
+                self.players.append(new_player)
+
+    def create_player(self, total_health: int) -> Player:
+        player = Player(total_health)
+        return player
+        
+        
 
 
 class Turn: # new

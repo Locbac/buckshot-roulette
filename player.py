@@ -10,10 +10,10 @@ class Player:
         pass
 
     def heal(self, amount: int) -> int:
-        if self.health + amount >= self.total_health:
-            self.health = self.total_health
-        else:
-            self.health += 1
+        old = self.health
+        self.health = min(self.health + amount, self.total_health)
+        return self.health - old
+        
 
     def add_item(self):
         pass
