@@ -5,14 +5,21 @@ from shotgun import Shotgun
 
 
 class Game:
-    def __init__(self, player_count: int = 0, total_health: int = random.randint(3,6), player_name: str = '') -> None: #player_name = new
-        self.players = []
+    def __init__(self, \
+                player_count: int = 0, \
+                total_health: int = random.randint(3,6), \
+            ) -> None: #player_name = new
+        
+        self.players: list[Player] = []
+        self.current_turn: Player
+
+        
         if player_count == 0:
             return
         else:
             for i in range(player_count):
+                player_name = f"Player_{i+1}"
                 new_player = self.create_player(total_health, player_name)
-                self.name = f"Player_" + f"{i}"
                 self.players.append(new_player)
                 print('player created')
 
@@ -22,19 +29,19 @@ class Game:
         return player
         
         
-    def list_players(self, players): #new
-        for x in range(len(players)):
-            print(f'{players[x].name} health: {players[x].health} {players[x].inventory}')
-
-                
+    def list_players(self) -> list[Player]: #new
+        for x in range(len(self.players)):
+            print(f'{self.players[x].name} health: {self.players[x].health} items: {self.players[x].inventory}')
+        return self.players
     
+    def start(self) -> None:
+        self.current_turn = self.players[0]
 
+    def play_turn(self) -> None:
+        pass
 
+       
+     
 
-
-
-
-
-
-
+    def next_turn(self)
         

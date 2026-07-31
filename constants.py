@@ -1,7 +1,6 @@
 import random
 
 class Constants:
-    players = []
     player_count = 4
     player_health: int = random.randint(3,6)
     

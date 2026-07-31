@@ -3,6 +3,9 @@ from enum import IntEnum
 from typing import NamedTuple
 import random
 
+from game import Game
+from player import Player
+
 class Shell(IntEnum):
     EMPTY = 0
     LIVE = 1
@@ -16,9 +19,11 @@ class Shotgun:
     def __init__(self, size: int = 8) -> None:
         self.size = size
         self.chambers = []
+        self.damage: int = 1
         self.reset()
     
     def reload(self) -> None:
+        print("reloading...")
         self.reset()
         self.randomize()
         self.compact()
@@ -79,19 +84,24 @@ class Shotgun:
                 return ChamberResult(chamber, shell)
         return None
 
-    def shoot(self) -> int: #new
+    def shoot(self, user: Player, target: Player, game: Game, damage: int = 1) -> int: #new
 
         if self.chambers[0] == Shell.BLANK:
+            
             print("Click")
             self.chambers.remove(self.chambers[0])
+            if user == target: 
+                print("extra turn")
 
         elif self.chambers[0] == Shell.LIVE:
+            
             print('Bang')
+            target.take_damage(self.damage)
             self.chambers.remove(self.chambers[0])
 
         if self.chambers[0] == Shell.EMPTY:
             self.reload()
-            print("reloading...")
+            
                  
         
         print(self)

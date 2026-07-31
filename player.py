@@ -8,7 +8,10 @@ class Player:
         self.name: str = player_name #new   
 
     def take_damage(self, damage: int) -> int:
-        pass
+        old = self.health
+        self.health = max(self.health - damage, self.health)
+        return self.health - old
+        
 
     def heal(self, amount: int) -> int:
         old = self.health

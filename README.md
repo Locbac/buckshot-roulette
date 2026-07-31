@@ -49,3 +49,8 @@ we finna do some machine learning or some sort of algo to get bots in the real g
             - target
             - game
 
+
+# TODO
+
+
+- [ ] Mark rounds to player for Phone powerup

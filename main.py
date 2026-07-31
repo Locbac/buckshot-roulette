@@ -14,14 +14,13 @@ from constants import Constants
 
 def main():
    
-    # Use getattr to avoid static attribute access issues if PLAYER_COUNT isn't recognized
-    game = Game(getattr(Constants, "player_count"))
+  
+    game = Game(player_count=Constants.player_count, total_health=Constants.player_health)
     
-    for i in range(Constants.player_count): 
-        Constants.players.append(Player(total_health=Constants.player_health, player_name = str)) #new player_name
-
+    """
+    loop through game.play_turn()
+    """
     
-
     shotgun = Shotgun()
     print(shotgun)
     
@@ -43,12 +42,12 @@ def main():
 
         debug = input('debug\n')
 
-        if debug == 'debug_shotgun':
+        if debug == 'debug_shotgun' or debug == 'shoot':
             print(shotgun)
             Shotgun.shoot(shotgun) #new function
 
-        if debug == 'player_list':
-            game.list_players(Constants.players)
+        if debug == 'list_players' or debug == 'player_list':
+            game.list_players()
 
         if debug == 'exit':
             exit()
