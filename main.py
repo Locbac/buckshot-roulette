@@ -6,7 +6,7 @@ from shotgun import Shotgun
 from player import Player
 from game import Game
 from constants import Constants 
-from game import Turn
+
 
 
 
@@ -18,7 +18,7 @@ def main():
     game = Game(getattr(Constants, "player_count"))
     
     for i in range(Constants.player_count): 
-        Constants.players.append(Player(total_health=Constants.player_health)) 
+        Constants.players.append(Player(total_health=Constants.player_health, player_name = str)) #new player_name
 
     
 
@@ -36,9 +36,22 @@ def main():
     print(f"{shotgun.live_count()} live") 
     print(f"{shotgun.blank_count()} blank") 
 
-  
-   
+
     
+
+    while True: #temp
+
+        debug = input('debug\n')
+
+        if debug == 'debug_shotgun':
+            print(shotgun)
+            Shotgun.shoot(shotgun) #new function
+
+        if debug == 'player_list':
+            game.list_players(Constants.players)
+
+        if debug == 'exit':
+            exit()
 
 if __name__ == "__main__":
     main()

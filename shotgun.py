@@ -79,10 +79,22 @@ class Shotgun:
                 return ChamberResult(chamber, shell)
         return None
 
-    def shoot(self) -> int:         #activates when shotgun is shot
-        
+    def shoot(self) -> int: #new
 
-        self.chambers.remove(self.chambers[0])
+        if self.chambers[0] == Shell.BLANK:
+            print("Click")
+            self.chambers.remove(self.chambers[0])
+
+        elif self.chambers[0] == Shell.LIVE:
+            print('Bang')
+            self.chambers.remove(self.chambers[0])
+
+        if self.chambers[0] == Shell.EMPTY:
+            self.reload()
+            print("reloading...")
+                 
+        
+        print(self)
         
 
     def __repr__(self):

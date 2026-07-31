@@ -1,10 +1,11 @@
 from item import Item
 
 class Player:
-    def __init__(self, total_health: int) -> None:
+    def __init__(self, total_health: int, player_name: str) -> None:
         self.total_health: int = total_health
         self.health: int = total_health
         self.inventory: list[Item] = []
+        self.name: str = player_name #new   
 
     def take_damage(self, damage: int) -> int:
         pass
@@ -20,3 +21,5 @@ class Player:
 
     def take_item(self, item: Item):
         self.inventory.remove(item)
+
+ 
