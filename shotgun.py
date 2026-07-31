@@ -79,5 +79,13 @@ class Shotgun:
                 return ChamberResult(chamber, shell)
         return None
 
+    def shoot(self) -> int:         #activates when shotgun is shot
+        
+
+        self.chambers.remove(self.chambers[0])
+        
+
     def __repr__(self):
         return f"Shotgun({self.chambers})"
+
+

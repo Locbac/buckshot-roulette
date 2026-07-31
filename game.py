@@ -1,5 +1,8 @@
 from player import Player
-import random # new, moved from main
+import random 
+from shotgun import Shotgun
+
+
 
 class Game:
     def __init__(self, player_count: int = 0, total_health: int = random.randint(3,6)) -> None:
@@ -16,14 +19,11 @@ class Game:
         return player
         
         
-
-
 class Turn: # new
     def __init__(self, playercount):
-        self.playercount = playercount
-        for players in range(playercount):
-            pass
-
+        current_turn = input("It is now your turn\n")
+        if current_turn == 'shoot':
+            Shotgun.shoot(self)
 
                 
     

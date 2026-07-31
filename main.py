@@ -5,35 +5,40 @@ from constants import Constants
 from shotgun import Shotgun
 from player import Player
 from game import Game
-from constants import Constants #new
-from game import Turn #new
+from constants import Constants 
+from game import Turn
+
+
+
+#what is __repr__ at the end of shotgun
 
 def main():
    
     # Use getattr to avoid static attribute access issues if PLAYER_COUNT isn't recognized
-    game = Game(getattr(Constants, "PLAYER_COUNT"))
+    game = Game(getattr(Constants, "player_count"))
     
-    for i in range(Constants.player_count): #new
-    for i in range(getattr()): #new
-        Player_Settings.players.append(Player(total_health=Player_Settings.player_health)) #new
+    for i in range(Constants.player_count): 
+        Constants.players.append(Player(total_health=Constants.player_health)) 
 
-  
+    
 
     shotgun = Shotgun()
+    print(shotgun)
+    
     shotgun.randomize()
     shotgun.compact()
 
 
-    print(f"Current settings: {Player_Settings.game_settings}") #new
+    print(f"Current settings: {Constants.game_settings}") 
 
-    print("Round 1") #new, current string will be replaced with a function that will count the current round number
+    print("Round 1") 
+    #print(shotgun) 
+    print(f"{shotgun.live_count()} live") 
+    print(f"{shotgun.blank_count()} blank") 
 
-    #print(shotgun) #new, didnt delete incase we need to read the final output of the shotgun 
-    print(f"{shotgun.live_count()} live") #new, now we can see the live and blank rounds but not the order like in buckshot
-    print(f"{shotgun.blank_count()} blank") #new
-
-    turn = Turn(Player_Settings.player_count)
-
+  
+   
+    
 
 if __name__ == "__main__":
     main()
