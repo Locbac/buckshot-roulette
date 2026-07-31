@@ -1,3 +1,4 @@
+from game import Game
 from item import Item
 
 class Player:
@@ -26,3 +27,9 @@ class Player:
         self.inventory.remove(item)
 
  
+    def play(self, game: Game) -> None:
+        for player in game.list_players():
+            print("\n")
+        play_option = input('Shoot which player name?\n')
+
+        # if play_option == 'debug_shotgun' or play_option == 'shoot':

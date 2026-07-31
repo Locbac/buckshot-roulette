@@ -35,13 +35,11 @@ class Game:
         return self.players
     
     def start(self) -> None:
+        random.shuffle(self.players)
         self.current_turn = self.players[0]
 
     def play_turn(self) -> None:
+        self.current_turn.play()
+
+    def next_turn(self):
         pass
-
-       
-     
-
-    def next_turn(self)
-        
