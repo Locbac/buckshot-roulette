@@ -1,4 +1,6 @@
-from game import Game
+from calendar import day_name
+
+from game import Game, Shotgun
 from item import Item
 
 class Player:
@@ -20,16 +22,31 @@ class Player:
         return self.health - old
         
 
-    def add_item(self):
+    def add_item(self) -> None:
         pass
 
     def take_item(self, item: Item):
         self.inventory.remove(item)
 
  
-    def play(self, game: Game) -> None:
-        for player in game.list_players():
-            print("\n")
-        play_option = input('Shoot which player name?\n')
+    def play(self, game: Game, shotgun: Shotgun) -> None:
+        players = game.get_players()
+        options = {}
 
-        # if play_option == 'debug_shotgun' or play_option == 'shoot':
+        for player in players:
+            options[player.name] = player
+            
+        """
+        Try except means infinite loop until you get it right.
+        """
+
+        try:
+            play_option = input("Shoot which player name?\n")
+            target_player = options[play_option]
+
+            if target_player is not None:
+                print(f"Selected: {target_player.name}")
+        except KeyError:
+            print("Invalid player name")
+            
+        shotgun.shoot(user = self, target=target_player, game=game, damage=shotgun.damage)

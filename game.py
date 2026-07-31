@@ -29,9 +29,11 @@ class Game:
         return player
         
         
-    def list_players(self) -> list[Player]: #new
+    def list_players(self) -> None:
         for x in range(len(self.players)):
             print(f'{self.players[x].name} health: {self.players[x].health} items: {self.players[x].inventory}')
+            
+    def get_players(self) -> list[Player]:
         return self.players
     
     def start(self) -> None:
