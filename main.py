@@ -1,11 +1,8 @@
 # main.py
-from enum import IntEnum
-
 from constants import Constants
 from shotgun import Shotgun
-from player import Player
 from game import Game
-from constants import Constants 
+
 
 
 
@@ -22,19 +19,18 @@ def main():
     """
     
     shotgun = Shotgun()
-    print(shotgun)
-    
     shotgun.randomize()
     shotgun.compact()
 
 
-    print(f"Current settings: {Constants.game_settings}") 
-
     print("Round 1") 
-    #print(shotgun) 
     print(f"{shotgun.live_count()} live") 
-    print(f"{shotgun.blank_count()} blank") 
+    print(f"{shotgun.blank_count()} blank")
 
+
+    print("main")
+
+    game.start()
 
     
 
@@ -51,6 +47,15 @@ def main():
 
         if debug == 'exit':
             exit()
+
+        if debug == 'start':
+           game.start()
+
+        if debug == 'turn':
+            game.turn()
+            
+        if debug == 'settings':
+            print(f"Current settings: {Constants.game_settings}") 
 
 if __name__ == "__main__":
     main()
