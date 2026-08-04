@@ -2,9 +2,8 @@
 from enum import IntEnum
 from typing import NamedTuple
 import random
-
-from game import Game
 from player import Player
+
 
 class Shell(IntEnum):
     EMPTY = 0
@@ -84,7 +83,7 @@ class Shotgun:
                 return ChamberResult(chamber, shell)
         return None
 
-    def shoot(self, user: Player, target: Player, game: Game, damage: int = 1) -> int: #new
+    def shoot(self, user: Player, target: Player, damage: int = 1) -> int: #new
 
         if self.chambers[0] == Shell.BLANK:
             

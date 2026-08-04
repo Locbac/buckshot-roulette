@@ -1,6 +1,6 @@
 from player import Player
+from shotgun import Shotgun
 import random 
-
 
 class Game:
     def __init__(self, \
@@ -19,7 +19,6 @@ class Game:
                 player_name = f"player_{i+1}"
                 new_player = self.create_player(total_health, player_name)
                 self.players.append(new_player)
-                print('player created')
 
     def create_player(self, total_health: int, player_name: str = '') -> Player:      
         player = Player(total_health, player_name)
@@ -37,42 +36,51 @@ class Game:
             
 
     def start(self) -> None:
+
+        shotgun = Shotgun()
+        shotgun.randomize()
+        shotgun.compact()
+
         random.shuffle(self.players)
 
-
-        print("hi")
         print("turn order:")
         for x in range(len(self.players)): print(self.players[x].name) 
 
-        
-        #print(f"other players: {other_players}")
-
         self.current_turn = self.players[0]
-
-
-        
-        self.turn()
+        self.turn(shotgun)
         
 
-    def turn(self) -> None:
+    def turn(self, shotgun) -> None:
 
-        print(f'{self.current_turn.name}s turn')
-        self.current_turn.isturn = True
+        while True:
+            print(f'{self.current_turn.name}s turn')
+            self.current_turn.isturn = True
 
-        print('Options:')
-        self.list_players()
+            print('Options:')
+            self.list_players()
 
-        shoot_choice = input(f'You are {self.current_turn.name}, Please select a player to shoot\n')
+            shoot_choice_name = input(f'You are {self.current_turn.name}, Please select a player to shoot\n')
 
-        if shoot_choice == self.current_turn.name:
-            print('You shot yourself')
-        elif shoot_choice == any(self.players):
-            print(f"You shot {shoot_choice}")
-        else:
-            print("error")
+            for player in range(len(self.players)):
+                if shoot_choice_name == self.players[player].name:
+                   shoot_choice = self.players[player]
+                   break
+
+
+            if shoot_choice.name == self.current_turn.name:
+                print('You shot yourself')
+                Shotgun.shoot(shotgun, self.current_turn, shoot_choice)
+            
+            else:
+                for player in range(len(self.players)):
+                    if self.players[player].name == shoot_choice.name and self.players[player].name != self.current_turn.name:
+                        
+                        print(f"{self.current_turn.name} shot {self.players[player].name}")
+                        Shotgun.shoot(shotgun, self.current_turn, shoot_choice)
+                        break
+
+            pause = input('')
         
-
        
-
-        
+       
         
