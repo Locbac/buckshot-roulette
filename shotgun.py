@@ -26,6 +26,8 @@ class Shotgun:
         self.reset()
         self.randomize()
         self.compact()
+        print(f"{self.live_count()} live")
+        print(f"{self.blank_count()} blank")
 
     def reset(self) -> None:
         # fill self.chambers with EMPTY, size long
@@ -107,7 +109,6 @@ class Shotgun:
         if target.health == 0:
             target.death()
         
-        print(self)
         
 
     def __repr__(self):
