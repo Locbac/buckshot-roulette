@@ -88,20 +88,24 @@ class Shotgun:
         if self.chambers[0] == Shell.BLANK:
             
             print("Click")
+
             self.chambers.remove(self.chambers[0])
+
             if user == target: 
                 print("extra turn")
 
         elif self.chambers[0] == Shell.LIVE:
             
             print('Bang')
-            target.take_damage(self.damage)
+            target.take_damage(damage)
+
             self.chambers.remove(self.chambers[0])
 
-        if self.chambers[0] == Shell.EMPTY:
+        if not self.chambers or self.chambers[0] == Shell.EMPTY:
             self.reload()
             
-                 
+        if target.health == 0:
+            target.death()
         
         print(self)
         

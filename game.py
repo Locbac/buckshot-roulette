@@ -29,10 +29,12 @@ class Game:
     def list_players(self):
         for x in range(len(self.players)):
             print(f"""
+
             {self.players[x].name} 
             health: {self.players[x].health} 
             items: {self.players[x].inventory}, 
-            turn: {self.players[x].isturn}""")
+            turn: {self.players[x].isturn}
+            alive: {self.players[x].alive}""")
             
 
     def start(self) -> None:
@@ -46,13 +48,37 @@ class Game:
         print("turn order:")
         for x in range(len(self.players)): print(self.players[x].name) 
 
-        self.current_turn = self.players[0]
+        
         self.turn(shotgun)
         
 
     def turn(self, shotgun) -> None:
 
+        turn_count = 0
+        alive_players = []
+
+        for player in range(len(self.players)):
+            alive_players.append(self.players[player])
+
         while True:
+
+
+            for player in range(len(alive_players)-1):
+                if alive_players[player].alive == False:
+                    alive_players.remove(alive_players[player])
+
+
+            if turn_count > len(alive_players)-1:
+                turn_count = 0
+                print("reset")
+
+
+            print(f"Turn count: {turn_count}")
+
+
+            self.current_turn = alive_players[turn_count]
+
+
             print(f'{self.current_turn.name}s turn')
             self.current_turn.isturn = True
 
@@ -61,9 +87,9 @@ class Game:
 
             shoot_choice_name = input(f'You are {self.current_turn.name}, Please select a player to shoot\n')
 
-            for player in range(len(self.players)):
-                if shoot_choice_name == self.players[player].name:
-                   shoot_choice = self.players[player]
+            for player in range(len(alive_players)):
+                if shoot_choice_name == alive_players[player].name:
+                   shoot_choice = alive_players[player]
                    break
 
 
@@ -72,15 +98,18 @@ class Game:
                 Shotgun.shoot(shotgun, self.current_turn, shoot_choice)
             
             else:
-                for player in range(len(self.players)):
-                    if self.players[player].name == shoot_choice.name and self.players[player].name != self.current_turn.name:
+                for player in range(len(alive_players)):
+                    if alive_players[player].name == shoot_choice.name and alive_players[player].name != self.current_turn.name:
                         
-                        print(f"{self.current_turn.name} shot {self.players[player].name}")
+                        print(f"{self.current_turn.name} shot {alive_players[player].name}")
                         Shotgun.shoot(shotgun, self.current_turn, shoot_choice)
                         break
 
+            self.current_turn.isturn = False
+            turn_count = turn_count + 1 
+
             pause = input('')
-        
+            
        
        
         

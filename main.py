@@ -1,6 +1,5 @@
 # main.py
 from constants import Constants
-from shotgun import Shotgun
 from game import Game
 
 
