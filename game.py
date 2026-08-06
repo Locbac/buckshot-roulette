@@ -5,7 +5,7 @@ import random
 class Game:
     def __init__(self, \
                 player_count: int = 0, \
-                total_health: int = random.randint(3,6), \
+                total_health: int = random.randint(2,5), \
             ) -> None: #player_name = new
         
         self.players: list[Player] = []
@@ -50,6 +50,7 @@ class Game:
 
         turn_count = 0
         alive_players = []
+        bonus_turn = False
 
         for player in range(len(self.players)):
             alive_players.append(self.players[player])
@@ -63,28 +64,38 @@ class Game:
 
         while True: 
             self.list_players()
-            self.shoot_choice(alive_players, shotgun, current_turn)
+
+            while True:
+                try:
+                    bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn, bonus_turn)
+
+                    if bonus_turn:
+                        print("extra turn")
+                        bonus_turn = False
+                    else:
+                        break
+                except Exception:
+                   print("Invalid input, please try again")
+
             self.check_alive_players(alive_players)
             current_turn, turn_count = self.next_turn(current_turn, alive_players, turn_count)
 
             
     def next_turn(self, current_turn, alive_players, turn_count):
-
-          
         
-         self.current_turn.isturn = False
-         self.current_turn = alive_players[turn_count]
-         self.current_turn.isturn = True
-         current_turn = self.current_turn
+        turn_count += 1  
+        if turn_count > len(alive_players)-1:
+                turn_count = 0
+
+        self.current_turn.isturn = False
+        self.current_turn = alive_players[turn_count]
+        self.current_turn.isturn = True
+        current_turn = self.current_turn
          
-         
-         turn_count = turn_count + 1
-         if turn_count > len(alive_players)-1:
-                     turn_count = 0
-         return(current_turn, turn_count)
+        return(current_turn, turn_count)
 
             
-    def shoot_choice(self, alive_players, shotgun, current_turn):
+    def shoot_choice(self, alive_players, shotgun, current_turn, bonus_turn):
 
         shoot_choice_name = input(f'You are {current_turn.name}, Please select a player to shoot\n')
         
@@ -95,15 +106,16 @@ class Game:
         
         if shoot_choice.name == current_turn.name:
             print('You shot yourself')
-            Shotgun.shoot(shotgun, current_turn, shoot_choice)
+            bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn)
                     
         else:
             for player in range(len(alive_players)):
                 if alive_players[player].name == shoot_choice.name and alive_players[player].name != current_turn.name:    
                     print(f"{current_turn.name} shot {alive_players[player].name}")
-                    Shotgun.shoot(shotgun, current_turn, shoot_choice)
+                    bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn)
                     break
-
+    
+        return bonus_turn
 
     def check_alive_players(self, alive_players):
         for player in range(len(alive_players)):

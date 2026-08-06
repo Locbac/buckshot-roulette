@@ -1,7 +1,4 @@
 from calendar import day_name
-
-
-
 from item import Item
 
 

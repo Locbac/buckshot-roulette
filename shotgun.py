@@ -15,7 +15,7 @@ class ChamberResult(NamedTuple):
     shell: Shell
 
 class Shotgun:
-    def __init__(self, size: int = 8) -> None:
+    def __init__(self, size: int = 800000) -> None:
         self.size = size
         self.chambers = []
         self.damage: int = 1
@@ -85,7 +85,7 @@ class Shotgun:
                 return ChamberResult(chamber, shell)
         return None
 
-    def shoot(self, user: Player, target: Player, damage: int = 1) -> int: #new
+    def shoot(self, user: Player, target: Player, bonus_turn, damage: int = 1): 
 
         if self.chambers[0] == Shell.BLANK:
             
@@ -94,7 +94,8 @@ class Shotgun:
             self.chambers.remove(self.chambers[0])
 
             if user == target: 
-                print("extra turn")
+               
+                bonus_turn = True
 
         elif self.chambers[0] == Shell.LIVE:
             
@@ -108,6 +109,8 @@ class Shotgun:
             
         if target.health == 0:
             target.death()
+
+        return bonus_turn
         
         
 
