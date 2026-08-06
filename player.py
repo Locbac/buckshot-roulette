@@ -3,13 +3,14 @@ from item import Item
 
 
 class Player:
-    def __init__(self, total_health: int, player_name: str, is_turn: bool = False, alive: bool = True) -> None:
+    def __init__(self, total_health: int, player_name: str, is_turn: bool = False, alive: bool = True, wins: int = 0) -> None:
         self.total_health: int = total_health
         self.health: int = total_health
         self.inventory: list[Item] = []
         self.name: str = player_name #new   
         self.isturn: bool = is_turn
         self.alive: bool = alive
+        self.wins: int = wins
 
     def take_damage(self, damage: int) -> int:
         current_health = self.health

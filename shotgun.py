@@ -15,7 +15,7 @@ class ChamberResult(NamedTuple):
     shell: Shell
 
 class Shotgun:
-    def __init__(self, size: int = 800000) -> None:
+    def __init__(self, size: int = 8) -> None:
         self.size = size
         self.chambers = []
         self.damage: int = 1

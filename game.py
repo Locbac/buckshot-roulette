@@ -3,14 +3,16 @@ from shotgun import Shotgun
 import random 
 
 class Game:
+    print("game was called")
     def __init__(self, \
                 player_count: int = 0, \
-                total_health: int = random.randint(2,5), \
+                total_health: int | None = None, \
             ) -> None: #player_name = new
         
         self.players: list[Player] = []
         self.current_turn: Player
 
+        total_health = random.randint(2,5)
         
         if player_count == 0:
             return
@@ -78,7 +80,12 @@ class Game:
                    print("Invalid input, please try again")
 
             self.check_alive_players(alive_players)
+            if self.check_game_over(alive_players):
+                break
+
             current_turn, turn_count = self.next_turn(current_turn, alive_players, turn_count)
+
+            #next round
 
             
     def next_turn(self, current_turn, alive_players, turn_count):
@@ -123,8 +130,16 @@ class Game:
                 alive_players.remove(alive_players[player])
                 break
 
+
+    def check_game_over(self, alive_players):
         if len(alive_players) == 1:
-            print(f"{alive_players[0].name} has won the game!")    
+            print(f"{alive_players[0].name} has won the game!")
+            alive_players[0].wins =+ 1
+
+            print("Next round")
+            return True
+        return(False)
+
 
    
         
