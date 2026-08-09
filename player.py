@@ -10,9 +10,12 @@ class Player:
         self.wins: int = wins
 
     def take_damage(self, damage: int) -> int:
-        current_health = self.health
-        self.health = current_health - damage
-        print(f"{self.name} took {damage} damage")
+        old = self.health
+        self.health = max(self.health - damage, 0)
+        damage_taken = old - self.health
+        print(f"{self.name} took {damage_taken} damage")
+        print(f"{self.name} now at {self.health} health")
+        return damage_taken
         
 
     def heal(self, amount: int) -> int:
