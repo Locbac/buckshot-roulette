@@ -24,8 +24,8 @@ class Player:
         return self.health - old
         
 
-    def add_item(self) -> None:
-        pass
+    def add_item(self, item: Item) -> None:
+        self.inventory.append(item)
 
   #  def take_item(self, item: Item):
    #     self.inventory.remove(item)
