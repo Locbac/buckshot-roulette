@@ -42,6 +42,17 @@ class Game:
     def start(self) -> None:
 
         shotgun = Shotgun()
+        """
+        amon: one thing I'm noticing on first overview of the code, 
+        we create a shotgun in the game, I remember in the drawing we made -
+        maybe not though - at least I said that it made sense to have
+        the game *own* the shotgun, then the players use it.
+        Because the shotguns aren't owned by each player, it's per game, there's ONE shotgun.
+
+        so I think it would make sense to create maybe self.shotgun: list[Shotgun] = [].
+        or maybe even simpler, self.shotgun: Shotgun.
+        So we always have a reference to it I guess.
+        """
         shotgun.randomize()
         shotgun.compact()
 
@@ -55,8 +66,13 @@ class Game:
 
     def turn(self, shotgun) -> None:
 
-        turn_count = 0
+        turn_count = 0 # I like this tbh
         alive_players = []
+        """
+        amon: would it make sense to just copy the players list
+        from self.players as a copied list, not a copy of the reference?
+        alive_players: list[Player] = self.players.copy()
+        """
         bonus_turn = False
 
         for player in range(len(self.players)):
@@ -84,6 +100,11 @@ class Game:
 
                     elif options == 'shoot':
                         bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn, bonus_turn)
+                        """
+                        amon: ngl I dont know what bonus turn means
+                        is it like when you shoot yourself, and it's blank, you
+                        are the next turn again?
+                        """
 
                         if bonus_turn:
                             print("extra turn")
@@ -106,7 +127,29 @@ class Game:
         
         turn_count += 1  
         if turn_count > len(alive_players)-1:
-                turn_count = 0
+            turn_count = 0
+            """
+            amon: I think you can do something like
+            if turn_count % len(alive_players) == 0
+            basically like if you divide the turn count by
+            how many alive players there are, and it's not 0
+            that means that it hasn't cycled fully
+            example:
+            3 people, turn 0
+            0%3 = 0, weird case, would mean 'recycle', but don't need to
+            turn 1
+            1%3 = 1, since 3 doesn't go in, remainder 1
+            2%3 = 2
+            3%3 = 0
+
+            might be too much bs?
+
+            but I think this is the main way to deal with these sort of things
+            use modulo
+
+            could be nice to learn that and try to implement it here
+            """
+            
 
         self.current_turn.isturn = False
         self.current_turn = alive_players[turn_count]
@@ -117,6 +160,10 @@ class Game:
 
             
     def shoot_choice(self, alive_players, shotgun, current_turn, bonus_turn):
+        """
+        amon: might need a 'try:' 'except:' thing here incase a wrong input
+        was done, otherwise I wouldn't really change anything here
+        """
 
         shoot_choice_name = input(f'You are {current_turn.name}, Please select a player to shoot\n')
         
@@ -128,6 +175,45 @@ class Game:
         if shoot_choice.name == current_turn.name:
             print('You shot yourself')
             bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, self)
+            """
+            amon: I'm so confused on what the fuck is going on here
+            cause the shotgun.shoot method has: user, target, bonus turn, players (???), damage as inputs
+            how the hell does this work with 'shotgun' being passed into it?
+
+            ---
+
+            wait, I see something weird.
+            there's Shotgun.shoot(...). So we literally are calling the entire shotgun class
+            we are not calling the actual shotgun we already have in the game.
+            like we create a temp class in memory to use Shotgun.shoot() basically.
+            we should be doing shotgun.shoot() not Shotgun.shoot(), because lowercase is the
+            shotgun we already have
+            Shotgun is the class.
+
+            Also why I say ??? to players being passed to shotgun. I feel like that's complicated as
+            hell. Why does the shotgun need to know who the players are. It just needs
+            to know the person using and person shot.
+            I think we can bring the bonus turn stuff outwards somehow.
+
+            ---
+
+            I now see how the bonus turn thing works.
+            I think we just need to figure out how to do this with the
+            proper like - ownership of variables and things.
+
+            Like right now you pass in bonus turn, then it modifies bonus turn
+            instead of passing a result back.
+
+            I think we might have to say def shoot(...) -> bool: or -> ShotResult: 
+            where ShotResult is a side class or maybe we have a new thing in Constants
+            That way we can just have it return something.
+            So we shotgun.shoot(...). Then we don't need to pass in a bonus_turn variable.
+            We can then just expect that shotgun.shoot(...) returns a ShotResult class.
+            Inside we can do like ShotResult.bonus_turn is true or false and 
+            ShotResult.damage_dealt = 1, etc.
+
+            I don't think I can do all this before I sleep today, idk I'll try.
+            """
                     
         else:
             for player in range(len(alive_players)):
@@ -144,6 +230,17 @@ class Game:
                 alive_players.remove(alive_players[player])
                 break
 
+        """
+        amon: kinda cool system
+        I was thinking this could be better optimized
+        but then I realize
+        this needs to be simple and readable
+        we're not trying to score 100% on a cs course and
+        optimize for fastest time
+
+        this is good
+        """
+
 
     def check_game_over(self, alive_players):
         if len(alive_players) == 1:
@@ -158,4 +255,15 @@ class Game:
    
     def use_item(self, current_turn):
         print(f"Please select an item: {current_turn.inventory} or select a player to' shoot")
+        """
+        amon: I think this is called "abstract implementation"
+        or something like that
+
+        you just assume the thing works
+
+        then let someone else implement it.
+
+        this is gonna be fucked to implement. the itembox stuff
+        amon: I think this is called "abstract implementation"
+        """
         

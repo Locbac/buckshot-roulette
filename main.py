@@ -6,6 +6,7 @@ def main():
     while True:
         game = Game(player_count=Constants.player_count) 
         game.start()
+        # amon: you cooked with cleaning up main
 
 if __name__ == "__main__":
     main()
