@@ -33,5 +33,6 @@ class Player:
  
     def death(self) -> None:
         self.alive = False
+        self.health = 0
         print(f"{self.name} has been eliminated")
         
