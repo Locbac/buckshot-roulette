@@ -56,7 +56,12 @@ class Game:
         self.shotgun.compact()
 
         random.shuffle(self.players)
-        Itembox(self)
+        item_count = random.randint(2,4)
+        itemboxes: list[Itembox] = []
+        for i in range(len(self.players)):
+            new_itembox = Itembox(item_count=item_count, game=self)
+            itemboxes.append(new_itembox)
+
         """
         amon: for item box... I'm thinking. A dictionary.
         {
@@ -86,6 +91,13 @@ class Game:
         Then immediately unpack all the items into the player's inventory.
 
         I think that's easiest.
+
+        ---
+
+        I guess after what I did, we then would just unpack the items and add it to players.
+
+        makes me think, do we even need 'ItemBox' or can we just generate two to four random items
+        in this start and turn code. then immediately just add them to the players?
         """
 
         self.turn(self.shotgun)
@@ -96,7 +108,7 @@ class Game:
     def turn(self, shotgun) -> None:
 
         turn_count = 0 # I like this tbh
-        alive_players = []
+        alive_players: list[Player] = self.players.copy()
         """
         amon: would it make sense to just copy the players list
         from self.players as a copied list, not a copy of the reference?
@@ -104,15 +116,15 @@ class Game:
         """
         bonus_turn = False
 
-        for player in range(len(self.players)):
-            alive_players.append(self.players[player])
+        # for player in range(len(self.players)):
+        #     alive_players.append(self.players[player])
 
         print(f"{shotgun.live_count()} live")
         print(f"{shotgun.blank_count()} blank")
 
         self.current_turn = alive_players[turn_count]
         self.current_turn.isturn = True
-        current_turn = self.current_turn
+        current_turn_player: Player = self.current_turn
 
        
 
@@ -122,18 +134,13 @@ class Game:
             while True:
                 try:
 
-                    options = input(f"""{current_turn.name} choose an option:\nshoot       use_item\n""")
+                    options = input(f"""{current_turn_player.name} choose an option:\nshoot       use_item\n""")
 
                     if options == 'use_item':
-                        self.use_item(current_turn)
+                        current_turn_player.use_item_prompt(game=self)
 
                     elif options == 'shoot':
-                        bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn, bonus_turn)
-                        """
-                        amon: ngl I dont know what bonus turn means
-                        is it like when you shoot yourself, and it's blank, you
-                        are the next turn again?
-                        """
+                        bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn_player, bonus_turn)
 
                         if bonus_turn:
                             print("extra turn")
@@ -147,7 +154,7 @@ class Game:
             if self.check_game_over(alive_players):
                 break
 
-            current_turn, turn_count = self.next_turn(current_turn, alive_players, turn_count)
+            current_turn_player, turn_count = self.next_turn(current_turn_player, alive_players, turn_count)
 
             #next round
 
@@ -284,17 +291,17 @@ class Game:
 
         
    
-    def use_item(self, current_turn):
-        print(f"Please select an item: {current_turn.inventory} or select a player to' shoot")
-        """
-        amon: I think this is called "abstract implementation"
-        or something like that
+    # def use_item(self, current_turn):
+    #     print(f"Please select an item: {current_turn.inventory} or select a player to' shoot")
+    #     """
+    #     amon: I think this is called "abstract implementation"
+    #     or something like that
 
-        you just assume the thing works
+    #     you just assume the thing works
 
-        then let someone else implement it.
+    #     then let someone else implement it.
 
-        this is gonna be fucked to implement. the itembox stuff
-        amon: I think this is called "abstract implementation"
-        """
+    #     this is gonna be fucked to implement. the itembox stuff
+    #     amon: I think this is called "abstract implementation"
+    #     """
         

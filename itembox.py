@@ -41,7 +41,7 @@ class Itembox:
                     """
                     amon: I'm using the new add_item method (tap in)
                     side note, this is cause it's apparently bad practice to
-                    directly modify things from a class.
+                    directly modify (attributes / properties) from a class.
                     you're supposed to use a method for best practices
                     """
                     game.players[player].add_item(random_item)

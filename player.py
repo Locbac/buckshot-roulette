@@ -36,3 +36,11 @@ class Player:
         self.health = 0
         print(f"{self.name} has been eliminated")
         
+
+    def use_item_prompt(self, game: "Game") -> None:
+        try:
+
+            option = input(f"Please select an item: [{self.inventory}]")
+
+        except Exception:
+            print("Invalid input, please try again")
