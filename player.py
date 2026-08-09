@@ -1,12 +1,9 @@
-from calendar import day_name
-from item import Item
-
 
 class Player:
     def __init__(self, total_health: int, player_name: str, is_turn: bool = False, alive: bool = True, wins: int = 0) -> None:
         self.total_health: int = total_health
         self.health: int = total_health
-        self.inventory: list[Item] = []
+        self.inventory: list = []
         self.name: str = player_name #new   
         self.isturn: bool = is_turn
         self.alive: bool = alive
@@ -27,8 +24,8 @@ class Player:
     def add_item(self) -> None:
         pass
 
-    def take_item(self, item: Item):
-        self.inventory.remove(item)
+  #  def take_item(self, item: Item):
+   #     self.inventory.remove(item)
 
  
     def death(self) -> None:

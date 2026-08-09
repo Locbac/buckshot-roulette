@@ -1,9 +1,10 @@
 from player import Player
 from shotgun import Shotgun
+from itembox import Itembox
+
 import random 
 
 class Game:
-    print("game was called")
     def __init__(self, \
                 player_count: int = 0, \
                 total_health: int | None = None, \
@@ -33,9 +34,9 @@ class Game:
             print(
             f"{player.name}\t"
             f"health: {player.health}\t" 
-            f"items: {player.inventory}\t" 
             f"turn: {player.isturn}\t"
-            f"alive: {player.alive}\t")
+            f"alive: {player.alive}\t"
+            f"items: {player.inventory}\t")
             
 
     def start(self) -> None:
@@ -45,7 +46,11 @@ class Game:
         shotgun.compact()
 
         random.shuffle(self.players)
+        Itembox(self)
+
         self.turn(shotgun)
+
+        
         
 
     def turn(self, shotgun) -> None:
@@ -64,18 +69,27 @@ class Game:
         self.current_turn.isturn = True
         current_turn = self.current_turn
 
+       
+
         while True: 
             self.list_players()
 
             while True:
                 try:
-                    bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn, bonus_turn)
 
-                    if bonus_turn:
-                        print("extra turn")
-                        bonus_turn = False
-                    else:
-                        break
+                    options = input(f"""{current_turn.name} choose an option:\nshoot       use_item\n""")
+
+                    if options == 'use_item':
+                        self.use_item(current_turn)
+
+                    elif options == 'shoot':
+                        bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn, bonus_turn)
+
+                        if bonus_turn:
+                            print("extra turn")
+                            bonus_turn = False
+                        else:
+                            break
                 except Exception:
                    print("Invalid input, please try again")
 
@@ -113,13 +127,13 @@ class Game:
         
         if shoot_choice.name == current_turn.name:
             print('You shot yourself')
-            bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn)
+            bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, self)
                     
         else:
             for player in range(len(alive_players)):
                 if alive_players[player].name == shoot_choice.name and alive_players[player].name != current_turn.name:    
                     print(f"{current_turn.name} shot {alive_players[player].name}")
-                    bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn)
+                    bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, self)
                     break
     
         return bonus_turn
@@ -140,6 +154,8 @@ class Game:
             return True
         return(False)
 
-
+        
    
+    def use_item(self, current_turn):
+        print(f"Please select an item: {current_turn.inventory} or select a player to' shoot")
         

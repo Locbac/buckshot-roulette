@@ -3,7 +3,7 @@ from enum import IntEnum
 from typing import NamedTuple
 import random
 from player import Player
-
+from itembox import Itembox
 
 class Shell(IntEnum):
     EMPTY = 0
@@ -21,11 +21,14 @@ class Shotgun:
         self.damage: int = 1
         self.reset()
     
-    def reload(self) -> None:
+    def reload(self, players = None) -> None:
         print("reloading...")
         self.reset()
         self.randomize()
         self.compact()
+
+        Itembox(players)
+
         print(f"{self.live_count()} live")
         print(f"{self.blank_count()} blank")
 
@@ -85,7 +88,7 @@ class Shotgun:
                 return ChamberResult(chamber, shell)
         return None
 
-    def shoot(self, user: Player, target: Player, bonus_turn, damage: int = 1): 
+    def shoot(self, user: Player, target: Player, bonus_turn, players = None, damage: int = 1): 
 
         if self.chambers[0] == Shell.BLANK:
             
@@ -105,7 +108,7 @@ class Shotgun:
             self.chambers.remove(self.chambers[0])
 
         if not self.chambers or self.chambers[0] == Shell.EMPTY:
-            self.reload()
+            self.reload(players)
             
         if target.health == 0:
             target.death()
