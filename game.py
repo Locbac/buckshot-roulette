@@ -213,6 +213,8 @@ class Game:
             ShotResult.damage_dealt = 1, etc.
 
             I don't think I can do all this before I sleep today, idk I'll try.
+            Hopefully I can access github in China, and do some work there, otherwise
+            I'm screwed. It's kind of tight down there for western companies access.
             """
                     
         else:
