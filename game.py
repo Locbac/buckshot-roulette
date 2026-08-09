@@ -12,6 +12,7 @@ class Game:
         
         self.players: list[Player] = []
         self.current_turn: Player
+        self.shotgun: Shotgun
 
         total_health = random.randint(2,5)
         
@@ -24,9 +25,7 @@ class Game:
                 self.players.append(new_player)
 
     def create_player(self, total_health: int, player_name: str = '') -> Player:      
-        player = Player(total_health, player_name)
-        
-        return player
+        return Player(total_health, player_name)
         
         
     def list_players(self):
@@ -41,7 +40,7 @@ class Game:
 
     def start(self) -> None:
 
-        shotgun = Shotgun()
+        self.shotgun = Shotgun()
         """
         amon: one thing I'm noticing on first overview of the code, 
         we create a shotgun in the game, I remember in the drawing we made -
@@ -53,13 +52,43 @@ class Game:
         or maybe even simpler, self.shotgun: Shotgun.
         So we always have a reference to it I guess.
         """
-        shotgun.randomize()
-        shotgun.compact()
+        self.shotgun.randomize()
+        self.shotgun.compact()
 
         random.shuffle(self.players)
         Itembox(self)
+        """
+        amon: for item box... I'm thinking. A dictionary.
+        {
+            "Player_1" = \
+                Itembox(
+                    Item(type0)
+                    Item(type1)
+                    ...
+                    Item(typen)
+                )
+            "Player_2" = ...
+        }
+        Like we assign an itembox to each player. Linked via
+        the player's name as the key. Then the value is just a whole
+        ass itembox class. Like a new memory address pointing to
+        a new itembox class instance.
 
-        self.turn(shotgun)
+        The thing is, that follow the common sense. Like the game
+        hands out itemboxes right. The `Game` class should keep track of it.
+
+        Thing is, I'm not sure if that's easier, or if just letting
+        player class keep track of it makes sense.
+
+        Realistically, that's not what happens. But, I think it would be easier.
+        OR.
+        We don't mess with who owns it. Just have it run.
+        Then immediately unpack all the items into the player's inventory.
+
+        I think that's easiest.
+        """
+
+        self.turn(self.shotgun)
 
         
         
