@@ -21,13 +21,13 @@ class Shotgun:
         self.damage: int = 1
         self.reset()
     
-    def reload(self, players = None) -> None:
+    def reload(self, game = None) -> None:
         print("reloading...")
         self.reset()
         self.randomize()
         self.compact()
 
-        Itembox(players)
+        Itembox(game)
 
         print(f"{self.live_count()} live")
         print(f"{self.blank_count()} blank")
@@ -49,14 +49,15 @@ class Shotgun:
         number_to_pad_by = self.size - len(non_empty)
         self.chambers = non_empty + [Shell.EMPTY]*number_to_pad_by
 
-    def rack(self) -> Shell | None:
-        # pop/return the next chamber's shell
-        _first_non_empty = self.first_non_empty()
-        if _first_non_empty is None:
-            return
-        else: 
-            self.chambers[_first_non_empty.idx] = Shell.EMPTY
-            return _first_non_empty.shell
+    def rack(self, game) -> Shell | None:
+
+        print(f"{self.chambers[0].name} was removed")
+        self.chambers.remove(self.chambers[0])
+
+        if self.chambers[0] == Shell.EMPTY:
+           self.reload(game) 
+
+
 
     def live_count(self) -> int:
         count = 0
@@ -81,12 +82,6 @@ class Shotgun:
                 count += 1
         return count
 
-    def first_non_empty(self) -> ChamberResult | None:
-        for chamber in range(self.size):
-            shell = self.chambers[chamber]
-            if shell != Shell.EMPTY:
-                return ChamberResult(chamber, shell)
-        return None
 
     def shoot(self, user: Player, target: Player, bonus_turn, players = None, damage: int = 1): 
 

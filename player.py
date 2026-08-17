@@ -1,3 +1,4 @@
+from item import Item
 
 class Player:
     def __init__(self, total_health: int, player_name: str, is_turn: bool = False, alive: bool = True, wins: int = 0) -> None:
@@ -24,7 +25,7 @@ class Player:
         return self.health - old
         
 
-    def add_item(self, item: Item) -> None:
+    def add_item(self, item: str ) -> None:
         self.inventory.append(item)
 
   #  def take_item(self, item: Item):
@@ -38,9 +39,14 @@ class Player:
         
 
     def use_item_prompt(self, game: "Game") -> None:
-        try:
 
-            option = input(f"Please select an item: [{self.inventory}]")
+        option = input(f"Please select an item: {self.inventory}\n")
 
-        except Exception:
-            print("Invalid input, please try again")
+        if option in self.inventory:
+                Item.item_used(option, game)
+                self.inventory.remove(option)
+        else:
+                print("not an item")
+        
+
+        
