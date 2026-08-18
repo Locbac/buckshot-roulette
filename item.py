@@ -8,11 +8,19 @@ class Item:
             game.shotgun.rack(game)
             print(game.shotgun)
 
+     def magnifying_glass(item:str, game):
+          print(game.shotgun)
+          print(game.shotgun.chambers[0].name)
 
-     def item_used(item: str, shotgun: list):
+
+     def item_used(item: str, game: None):
         match item:
             case 'beer':
-                Item.beer(item, shotgun)    
+                Item.beer(item, game)
+
+            case 'magnifying_glass':
+                  Item.magnifying_glass(item, game)
+            
             
    
 

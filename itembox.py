@@ -6,11 +6,11 @@ class Itembox:
 
 
     items = [
-        "beer", 
+       #"beer", 
        # "cigarettes", 
        # "inverter", 
        # "jammer", 
-       # "magnifying_Glass", 
+       "magnifying_glass", 
        # "hand_Saw", 
        # "adrenaline", 
        # "burner_Phone", 

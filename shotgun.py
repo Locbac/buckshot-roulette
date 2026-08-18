@@ -83,7 +83,7 @@ class Shotgun:
         return count
 
 
-    def shoot(self, user: Player, target: Player, bonus_turn, players = None, damage: int = 1): 
+    def shoot(self, user: Player, target: Player, bonus_turn, players = None): 
 
         if self.chambers[0] == Shell.BLANK:
             
@@ -98,7 +98,7 @@ class Shotgun:
         elif self.chambers[0] == Shell.LIVE:
             
             print('Bang')
-            target.take_damage(damage)
+            target.take_damage(self.damage)
 
             self.chambers.remove(self.chambers[0])
 

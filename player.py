@@ -38,7 +38,7 @@ class Player:
         print(f"{self.name} has been eliminated")
         
 
-    def use_item_prompt(self, game: "Game") -> None:
+    def use_item_prompt(self, game) -> None:
 
         option = input(f"Please select an item: {self.inventory}\n")
 

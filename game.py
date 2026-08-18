@@ -78,11 +78,11 @@ class Game:
             self.list_players()
 
             while True:
-              #  try:
+                try:
 
-                    options = input(f"""{current_turn_player.name} choose an option:\nshoot       use_item\n""")
+                    options = input(f"""{current_turn_player.name} choose an option:\nshoot       item\n""")
 
-                    if options == 'use_item':
+                    if options == 'item':
                         current_turn_player.use_item_prompt(game=self)
 
                     elif options == 'shoot':
@@ -93,8 +93,8 @@ class Game:
                             bonus_turn = False
                         else:
                             break
-               # except Exception:
-                  # print("Invalid input, please try again")
+                except Exception:
+                   print("Invalid input, please try again")
 
             self.check_alive_players(alive_players)
             if self.check_game_over(alive_players):
