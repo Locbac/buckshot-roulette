@@ -1,7 +1,7 @@
 
 
 class Item:
-
+     
      def beer(item: str, game):
             print(game.shotgun)
             print("you used the beer")
@@ -12,6 +12,28 @@ class Item:
           print(game.shotgun)
           print(game.shotgun.chambers[0].name)
 
+     def saw(item:str, game):
+          game.shotgun.damage = 2
+          
+
+     def cigarettes(item:str, game):
+          
+          if game.current_turn.total_health > game.current_turn.health: 
+               game.current_turn.health += 1
+               print(f"{game.current_turn.name} healed 1 hp")
+
+     def inverter(item:str, game):
+          from shotgun import Shell
+
+          print(game.shotgun)
+          if game.shotgun.chambers[0] == 1:
+               game.shotgun.chambers[0] = Shell.BLANK
+               print(game.shotgun)
+
+          elif game.shotgun.chambers[0] == 2:
+               game.shotgun.chambers[0] = Shell.LIVE
+               print(game.shotgun)  
+
 
      def item_used(item: str, game: None):
         match item:
@@ -20,8 +42,15 @@ class Item:
 
             case 'magnifying_glass':
                   Item.magnifying_glass(item, game)
-            
-            
+
+            case 'saw':
+                  Item.saw(item, game)
+
+            case 'cigarettes':
+                  Item.cigarettes(item, game)
+
+            case 'inverter':
+                  Item.inverter(item, game)
    
 
 

@@ -7,13 +7,13 @@ class Itembox:
 
     items = [
        #"beer", 
-       # "cigarettes", 
-       # "inverter", 
+       #"cigarettes", 
+        "inverter", 
        # "jammer", 
-       "magnifying_glass", 
-       # "hand_Saw", 
+       # "magnifying_glass", 
+       # "saw", 
        # "adrenaline", 
-       # "burner_Phone", 
+       # "burner_phone", 
        # "remote"
     ]
 

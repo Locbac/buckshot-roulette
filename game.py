@@ -76,9 +76,9 @@ class Game:
     
         while True: 
             self.list_players()
-
+ 
             while True:
-                try:
+               # try:
 
                     options = input(f"""{current_turn_player.name} choose an option:\nshoot       item\n""")
 
@@ -93,8 +93,8 @@ class Game:
                             bonus_turn = False
                         else:
                             break
-                except Exception:
-                   print("Invalid input, please try again")
+              #  except Exception:
+                  # print("Invalid input, please try again")
 
             self.check_alive_players(alive_players)
             if self.check_game_over(alive_players):

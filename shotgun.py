@@ -51,7 +51,7 @@ class Shotgun:
 
     def rack(self, game) -> Shell | None:
 
-        print(f"{self.chambers[0].name} was removed")
+        print(f"racked {self.chambers[0].name}")
         self.chambers.remove(self.chambers[0])
 
         if self.chambers[0] == Shell.EMPTY:
@@ -107,6 +107,8 @@ class Shotgun:
             
         if target.health == 0:
             target.death()
+
+        self.damage = 1
 
         return bonus_turn
         
