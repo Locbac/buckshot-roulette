@@ -57,6 +57,7 @@ class Game:
 
     def turn(self, shotgun) -> None:
 
+        turn_order = 1
         turn_count = 0 # I like this tbh
         alive_players: list[Player] = self.players.copy()
   
@@ -78,12 +79,12 @@ class Game:
             self.list_players()
  
             while True:
-               # try:
+                 try:
 
                     options = input(f"""{current_turn_player.name} choose an option:\nshoot       item\n""")
 
                     if options == 'item':
-                        current_turn_player.use_item_prompt(game=self)
+                        turn_order = current_turn_player.use_item_prompt(turn_order, game=self)
 
                     elif options == 'shoot':
                         bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn_player, bonus_turn)
@@ -93,24 +94,27 @@ class Game:
                             bonus_turn = False
                         else:
                             break
-              #  except Exception:
-                  # print("Invalid input, please try again")
+                 except Exception:
+                   print("Invalid input, please try again")
 
             self.check_alive_players(alive_players)
             if self.check_game_over(alive_players):
                 break
             
-            current_turn_player, turn_count = self.next_turn(current_turn_player, alive_players, turn_count)
+            current_turn_player, turn_count = self.next_turn(current_turn_player, alive_players, turn_count, turn_order)
 
             #next round
 
             
-    def next_turn(self, current_turn, alive_players, turn_count):
+    def next_turn(self, current_turn, alive_players, turn_count, turn_order):
 
-        turn_count += 1  
+        turn_count += turn_order 
         if turn_count > len(alive_players)-1:
             turn_count = 0
-            
+
+        if turn_count <= -1:
+            turn_count = len(alive_players)-1
+
         self.current_turn.isturn = False
         self.current_turn = alive_players[turn_count]
         self.current_turn.isturn = True

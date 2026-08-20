@@ -40,7 +40,7 @@ class Shotgun:
     def randomize(self) -> None:
         # fill each chamber with a random Shell
         for chamber in range(self.size):
-            choices = [Shell.LIVE, Shell.BLANK, Shell.EMPTY]
+            choices = [Shell.LIVE, Shell.EMPTY] #Shell.BLANK, 
             self.chambers[chamber] = random.choice(choices)
 
     def compact(self) -> None:

@@ -8,13 +8,13 @@ class Itembox:
     items = [
        #"beer", 
        #"cigarettes", 
-        "inverter", 
+       #"inverter", 
        # "jammer", 
        # "magnifying_glass", 
        # "saw", 
        # "adrenaline", 
        # "burner_phone", 
-       # "remote"
+        "remote"
     ]
 
 

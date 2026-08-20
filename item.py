@@ -34,8 +34,12 @@ class Item:
                game.shotgun.chambers[0] = Shell.LIVE
                print(game.shotgun)  
 
+     def remote(turn_order):
+          turn_order = turn_order * -1
+          
+          return(turn_order)
 
-     def item_used(item: str, game: None):
+     def item_used(item: str, turn_order, game: None):
         match item:
             case 'beer':
                 Item.beer(item, game)
@@ -51,8 +55,11 @@ class Item:
 
             case 'inverter':
                   Item.inverter(item, game)
-   
 
+            case 'remote':
+                  turn_order = Item.remote(turn_order)
+                  
+                  return(turn_order)  
 
 
 

@@ -38,13 +38,15 @@ class Player:
         print(f"{self.name} has been eliminated")
         
 
-    def use_item_prompt(self, game) -> None:
+    def use_item_prompt(self, turn_order, game) -> None:
 
         option = input(f"Please select an item: {self.inventory}\n")
 
         if option in self.inventory:
-                Item.item_used(option, game)
+                turn_order = Item.item_used(option, turn_order, game)
                 self.inventory.remove(option)
+                print(f"Turn order: {turn_order}")
+                return(turn_order)
         else:
                 print("not an item")
         
