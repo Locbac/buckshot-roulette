@@ -16,7 +16,7 @@ class Player:
         damage_taken = old - self.health
         print(f"{self.name} took {damage_taken} damage")
         print(f"{self.name} now at {self.health} health")
-        return damage_taken
+        
         
 
     def heal(self, amount: int) -> int:
@@ -32,11 +32,16 @@ class Player:
    #     self.inventory.remove(item)
 
  
-    def death(self) -> None:
+    def death(self, turn_order: int, turn_count: int) -> None:
         self.alive = False
         self.health = 0
         print(f"{self.name} has been eliminated")
-        
+
+        if turn_order < 0:
+             print(f"Turn count {turn_count}")
+             turn_count = turn_count - 1
+             print(f"Turn count {turn_count}")
+        return(turn_count)
 
     def use_item_prompt(self, turn_order, game) -> None:
 

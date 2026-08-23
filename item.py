@@ -58,7 +58,6 @@ class Item:
 
             case 'remote':
                   turn_order = Item.remote(turn_order)
-                  
                   return(turn_order)  
 
 

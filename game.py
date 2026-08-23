@@ -87,7 +87,7 @@ class Game:
                         turn_order = current_turn_player.use_item_prompt(turn_order, game=self)
 
                     elif options == 'shoot':
-                        bonus_turn = self.shoot_choice(alive_players, shotgun, current_turn_player, bonus_turn)
+                        bonus_turn, turn_count = self.shoot_choice(alive_players, shotgun, current_turn_player, bonus_turn, turn_count, turn_order)
 
                         if bonus_turn:
                             print("extra turn")
@@ -108,7 +108,9 @@ class Game:
             
     def next_turn(self, current_turn, alive_players, turn_count, turn_order):
 
+
         turn_count += turn_order 
+
         if turn_count > len(alive_players)-1:
             turn_count = 0
 
@@ -123,7 +125,7 @@ class Game:
         return(current_turn, turn_count)
 
             
-    def shoot_choice(self, alive_players, shotgun, current_turn, bonus_turn):
+    def shoot_choice(self, alive_players, shotgun, current_turn, bonus_turn, turn_count, turn_order):
    
 
         shoot_choice_name = input(f'You are {current_turn.name}, Please select a player to shoot\n')
@@ -135,17 +137,17 @@ class Game:
         
         if shoot_choice.name == current_turn.name:
             print('You shot yourself')
-            bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, self)
+            bonus_turn, turn_count = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, turn_count, turn_order, self)
             
                     
         else:
             for player in range(len(alive_players)):
                 if alive_players[player].name == shoot_choice.name and alive_players[player].name != current_turn.name:    
                     print(f"{current_turn.name} shot {alive_players[player].name}")
-                    bonus_turn = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, self)
+                    bonus_turn, turn_count  = Shotgun.shoot(shotgun, current_turn, shoot_choice, bonus_turn, turn_count, turn_order, self)
                     break
     
-        return bonus_turn
+        return(bonus_turn, turn_count)
 
     def check_alive_players(self, alive_players):
         for player in range(len(alive_players)):

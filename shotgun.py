@@ -40,7 +40,7 @@ class Shotgun:
     def randomize(self) -> None:
         # fill each chamber with a random Shell
         for chamber in range(self.size):
-            choices = [Shell.LIVE, Shell.EMPTY] #Shell.BLANK, 
+            choices = [Shell.LIVE, Shell.BLANK, Shell.EMPTY] #, 
             self.chambers[chamber] = random.choice(choices)
 
     def compact(self) -> None:
@@ -83,7 +83,7 @@ class Shotgun:
         return count
 
 
-    def shoot(self, user: Player, target: Player, bonus_turn, players = None): 
+    def shoot(self, user: Player, target: Player, bonus_turn, turn_count: int, turn_order: int, players = None): 
 
         if self.chambers[0] == Shell.BLANK:
             
@@ -106,11 +106,12 @@ class Shotgun:
             self.reload(players)
             
         if target.health == 0:
-            target.death()
+           turn_count = target.death(turn_count, turn_order)
+           
 
         self.damage = 1
 
-        return bonus_turn
+        return(bonus_turn, turn_count)
         
         
 
